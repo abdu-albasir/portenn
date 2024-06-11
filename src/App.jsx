@@ -12,7 +12,7 @@ function App() {
           <div class="header__logo">
             <img width="38" src={logo} alt="Pizza logo" />
             <div>
-              <h1>Geeks Pizza 23 1f</h1>
+              <h1>Geeks Pizza 23 1f abdul basir</h1>
               <p>самая вкусная пицца во вселенной</p>
             </div>
           </div>
