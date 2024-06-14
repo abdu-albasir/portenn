@@ -1,10 +1,10 @@
 import './scss/app.scss';
-
 import Header from './components/Header';
 import Categories from './components/Categories';
 import Sort from './components/Sort';
 import PizzaBlock from './components/PizzaBlock';
 import { useEffect, useState } from 'react';
+import Modal from './components/Modal';
 
 const sorts = [{
   id: 1,
@@ -74,10 +74,6 @@ function App() {
 
   }, [curenCaategory, curentSorts])
 
-
-  // const filteredData = pizzas?.filter((item) => item.category === curenCaategory)
-
-  console.log(pizzas);
   return (
     <div className="wrapper" >
       <Header />
@@ -92,11 +88,10 @@ function App() {
             {
               pizzas?.map((item) => <PizzaBlock price={item.price} title={item.title} img={item.image} key={item._id} />)
             }
-
-
           </div>
         </div>
       </div>
+  
     </div >
   )
 }
