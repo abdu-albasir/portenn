@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Sort = () => {
+const Sort = ({ curent, setCurent, sorts }) => {
     return (
         <div className="sort">
             <div className="sort__label">
@@ -21,9 +21,19 @@ const Sort = () => {
             </div>
             <div className="sort__popup">
                 <ul>
-                    <li className="active">популярности</li>
-                    <li>цене</li>
-                    <li>алфавиту</li>
+                    {
+                        sorts.map((item, index) =>
+                            <li
+                                onClick={() => setCurent(index)}
+                                className={
+                                    index === curent
+                                        ? 'active'
+                                        : ''}>
+                                {item.name}
+                            </li>
+                        )
+                    }
+
                 </ul>
             </div>
         </div>
