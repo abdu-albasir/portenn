@@ -40,12 +40,11 @@ const sorts = [{
 function HomePage() {
     const { isDarkMode, toggleTheme } = useContext(ThemeContext)
     const [query, setQuery] = useState('')
-    console.log(isDarkMode, 'darkMode is');
-    const [pizzas, setPizzas] = useState(null)
+    const [pizzas, setPizzas] = useState([])
     const [loading, setLoading] = useState(false)
     const [curenCaategory, setCurenCaategory] = useState(1)
     const [curentSorts, setCurentSorts] = useState(1)
-    console.log(query);
+
 
     useEffect(() => {
 
@@ -56,26 +55,30 @@ function HomePage() {
         url.searchParams.append('sortBy', sort)
         url.searchParams.append('order', oreder)
         url.searchParams.append('title', query)
-
+        
+        console.log({url});
         const fetchPizzas = async () => {
             setLoading(true)
             try {
                 const response = await fetch(url)
-                if (!response.ok) {
-                    new Error('ERROR')
+                if (!response.ok, response.status === 404) {
+                    return new Error('ERROR')
                 }
                 const result = await response.json()
+
                 setPizzas(result)
+                console.log('green');
             } catch (error) {
                 console.log(error);
+
             } finally {
                 setLoading(false)
             }
         }
 
         fetchPizzas()
-
-    }, [curenCaategory, curentSorts,query])
+        console.log(pizzas);
+    }, [curenCaategory, curentSorts, query])
 
     return (
         <div style={isDarkMode ? { background: '#ccc' } : {}} className="wrapper" >
