@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import logo from '../assets/img/pizza-logo.svg'
 import Modal from './Modal'
-const Header = () => {
+import { ThemeContext } from '../App'
+const Header = ({ setQuery }) => {
+    const { isDarkMode, toggleTheme } = useContext(ThemeContext)
     const [modal, setModal] = useState(false)
     const [modal2, setModal2] = useState(false)
 
     return (
-        <div className="header">
+        <div style={isDarkMode ? { background: 'yellow' } : {}} className="header">
             <div className="container">
                 <div className="header__logo">
                     <img width="38" src={logo} alt="Pizza logo" />
@@ -18,9 +20,9 @@ const Header = () => {
 
                     </div>
                 </div>
-
+                <input onChange={(e) => setQuery(e.target.value)} type="text" />
                 <div className="header__cart">
-                    <a href="/cart.html" className="button button--cart">
+                    <a style={isDarkMode ? { background: 'blue' } : {}} href="/cart.html" className="button button--cart">
                         <span>520 ₽</span>
                         <div className="button__delimiter"></div>
                         <svg
@@ -65,7 +67,7 @@ const Header = () => {
             </Modal>
             <Modal open={modal2} setOpen={setModal2}>
                 <div>
-                  <textarea name="" id=""></textarea>
+                    <textarea name="" id=""></textarea>
                     <button>krmgelkwmeglkmwelkgmlwkemglewrkmgrewg</button>
                 </div>
             </Modal>
