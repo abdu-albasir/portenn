@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "value": "rating",
+        "name": "популярности (DESC)"
+    },
+    {
+        "id": 2,
+        "value": "-rating",
+        "name": "популярности (ASC)"
+    },
+    {
+        "id": 3,
+        "value": "price",
+        "name": "цене (DESC)"
+    },
+    {
+        "id": 4,
+        "value": "-price",
+        "name": "цене (ASC)"
+    },
+    {
+        "id": 5,
+        "value": "title",
+        "name": "алфавиту (DESC)"
+    },
+    {
+        "id": 6,
+        "value": "-title",
+        "name": "алфавиту (ASC)"
+    }
+]

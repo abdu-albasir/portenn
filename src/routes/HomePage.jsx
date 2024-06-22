@@ -4,39 +4,12 @@ import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import { useContext, useEffect, useState } from 'react';
 import { ThemeContext } from '../App';
+import sorts from '../data/sort.json'
 
-const sorts = [{
-    id: 1,
-    value: 'rating',
-    name: 'популярности (DESC)'
-},
-{
-    id: 2,
-    value: '-rating',
-    name: 'популярности (ASC)'
-},
-{
-    id: 3,
-    value: 'price',
-    name: 'цене (DESC)'
-},
-{
-    id: 4,
-    value: '-price',
-    name: 'цене (ASC)'
-},
-{
-    id: 5,
-    value: 'title',
-    name: 'алфавиту (DESC)'
-},
-{
-    id: 6,
-    value: '-title',
-    name: 'алфавиту (ASC)'
-}
+
+const colors = [
+    'green', 'blue', 'orange', 'yellow', 'red'
 ]
-
 function HomePage() {
     const { isDarkMode, toggleTheme } = useContext(ThemeContext)
     const [query, setQuery] = useState('')
@@ -44,10 +17,11 @@ function HomePage() {
     const [loading, setLoading] = useState(false)
     const [curenCaategory, setCurenCaategory] = useState(1)
     const [curentSorts, setCurentSorts] = useState(1)
+    const [color, setColor] = useState('green')
+    const [curentColors, setCurentColors] = useState(0)
 
-
-    useEffect(() => {
-
+    const fetchPizzas = async () => {
+        setLoading(true)
         const sort = sorts[curentSorts].value.replace('-', '')
         const oreder = sorts[curentSorts].value.includes('-') ? 'asc' : 'desc'
         const url = new URL(`https://6367b246edc85dbc84d9ba5d.mockapi.io/products`)
@@ -55,35 +29,49 @@ function HomePage() {
         url.searchParams.append('sortBy', sort)
         url.searchParams.append('order', oreder)
         url.searchParams.append('title', query)
-        
-        console.log({url});
-        const fetchPizzas = async () => {
-            setLoading(true)
-            try {
-                const response = await fetch(url)
-                if (!response.ok, response.status === 404) {
-                    return new Error('ERROR')
-                }
-                const result = await response.json()
-
-                setPizzas(result)
-                console.log('green');
-            } catch (error) {
-                console.log(error);
-
-            } finally {
-                setLoading(false)
+        try {
+            const response = await fetch(url)
+            if (!response.ok, response.status === 404) {
+                return new Error('ERROR')
             }
+            const result = await response.json()
+            setPizzas(result)
+        } catch (error) {
+            return new Error('ERROR')
+        } finally {
+            setLoading(false)
         }
+    }
 
+    useEffect(() => {
         fetchPizzas()
-        console.log(pizzas);
     }, [curenCaategory, curentSorts, query])
 
+
     return (
-        <div style={isDarkMode ? { background: '#ccc' } : {}} className="wrapper" >
+        <div
+            style={isDarkMode ? { background: colors[curentColors] } : {}}
+            className="wrapper"
+        >
             <Header setQuery={setQuery} />
+            <button onClick={() => setCurentColors(prev => {
+                if (prev < colors.length) {
+                    return prev + 1
+                } else if (prev === colors.length) {
+                    return prev = 0
+                }
+            })} className='button'>color</button>
+            <br /><br />
             <button onClick={toggleTheme}>clicl</button>
+
+            {
+                colors.map((color) =>
+                    <button
+                        onClick={() => setColor(color)}
+                        style={{ background: color }}>
+                        color
+                    </button>)
+            }
             <div className="content">
                 <div className="container">
                     <div className="content__top">
