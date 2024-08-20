@@ -20,7 +20,7 @@ const Sort = ({ curent, setCurent, sorts }) => {
                 <span>популярности</span>
             </div>
             <div className="sort__popup">
-                <ul>
+            <ul>
                     {
                         sorts.map((item, index) =>
                             <li
